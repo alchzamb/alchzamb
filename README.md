@@ -25,16 +25,16 @@ I write about what I'm learning and the security decisions behind each project �
 
 ## Featured projects
 
-### 🔄 Swap App — *in progress*
+### 🔄 Swap App
 
-**A Foundry contract integrating Uniswap V2 for token swaps with slippage and deadline protection.**
+A Foundry contract integrating Uniswap V2 for token swaps, and adding/removing liquidity, with slippage and deadline protection.
 
-Building a swap contract on top of `IUniswapV2Router02`, covering `swapExactTokensForTokens`, single- and multi-hop paths, the allowance/approve flow, and `amountOutMin` as slippage protection — with the mempool-level attack surface (sandwich attacks) studied and documented as the reasoning behind those design decisions.
+Built on top of `IUniswapV2Router02`, covering `swapExactTokensForTokens`, single- and multi-hop paths, the allowance/approve flow, and `amountOutMin`/`amountAMin`/`amountBMin` as slippage protection — plus the pull-then-approve pattern required for LP tokens on withdrawal.
 
 **Demonstrates:** DEX/AMM integration · router trust boundaries · slippage protection · allowance flow
 **Stack:** Solidity 0.8.24 · Foundry · Uniswap V2
 
-[Source code](https://github.com/alchzamb/swapping-app-foundry)
+[Source code](https://github.com/alchzamb/liquidity-app-foundry)
 
 ---
 
