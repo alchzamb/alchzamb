@@ -25,13 +25,26 @@ I write about what I'm learning and the security decisions behind each project �
 
 ## Featured projects
 
-### 🔄 Swap App
+### 🔁 Swap App
 
-A Foundry contract integrating Uniswap V2 for token swaps, and adding/removing liquidity, with slippage and deadline protection.
+A security-focused Uniswap V2 swap integration, treating the router as an untrusted external dependency rather than a call wrapped in a function. Includes a Vite/React/TypeScript demo frontend.
 
-Built on top of `IUniswapV2Router02`, covering `swapExactTokensForTokens`, single- and multi-hop paths, the allowance/approve flow, and `amountOutMin`/`amountAMin`/`amountBMin` as slippage protection — plus the pull-then-approve pattern required for LP tokens on withdrawal.
+Covers exact-input `swapExactTokensForTokens` with on-chain slippage bounds capped at 10%, balance invariants checked before and after every external call, temporary exact allowances (never infinite), strict path validation, and `ReentrancyGuard`. 16 tests pass against a live Arbitrum fork.
 
-**Demonstrates:** DEX/AMM integration · router trust boundaries · slippage protection · allowance flow
+**Demonstrates:** untrusted-router integration · balance invariants · slippage bounds · reentrancy protection
+**Stack:** Solidity 0.8.24 · Foundry · Uniswap V2 · Vite · React · TypeScript
+
+[Source code](https://github.com/alchzamb/swapping-app-foundry) · [Live demo](https://swapping-app-foundry.vercel.app)
+
+---
+
+### 💧 Liquidity App
+
+A Foundry contract for adding and removing liquidity to a Uniswap V2 pool, with slippage and deadline protection.
+
+Built on top of `IUniswapV2Router02`, covering `swapExactTokensForTokens`, the allowance/approve flow, `amountOutMin`/`amountAMin`/`amountBMin` as slippage protection, and the pull-then-approve pattern required for LP tokens on withdrawal — since `addLiquidity` mints LP tokens directly to the caller, not to the contract.
+
+**Demonstrates:** DEX/AMM integration · router vs. factory trust boundaries · LP token lifecycle · slippage protection
 **Stack:** Solidity 0.8.24 · Foundry · Uniswap V2
 
 [Source code](https://github.com/alchzamb/liquidity-app-foundry)
@@ -55,12 +68,12 @@ Implements listing, cancellation, and purchase flows using the CEI pattern and i
 
 **An ERC-721 collection deployed and verified on Arbitrum One.**
 
-IPFS metadata hosted via Pinata, deployed to Arbitrum One (L2), verified on Arbiscan, and listed on OpenSea.
+IPFS metadata hosted via Pinata, deployed to Arbitrum One (L2), and verified on Arbiscan.
 
 **Demonstrates:** ERC-721 · IPFS metadata · L2 deployment · contract verification
 **Stack:** Solidity · Foundry · Arbitrum One
 
-[Source code](https://github.com/alchzamb/nft-collection) · [View on OpenSea](https://opensea.io/)
+[Source code](https://github.com/alchzamb/nft-collection)
 
 ---
 
@@ -108,9 +121,9 @@ Unit, access-control, overflow, and fuzz tests. Found and fixed a real bug — d
 | Area | Technologies |
 |---|---|
 | **Smart contracts** | Solidity, Foundry (Forge, Cast, Anvil, Chisel), OpenZeppelin v5.x, ERC-20 / ERC-721 |
-| **Secure contract design** | CEI pattern, ReentrancyGuard, SafeERC20, pull-payment patterns, access control |
-| **Testing** | Unit tests, fuzz tests, cheatcodes, `forge coverage`, CI with GitHub Actions (`forge fmt` / `forge test` gates) |
-| **DeFi protocols** | Uniswap V2 (router integration, multi-hop paths, slippage protection) |
+| **Secure contract design** | CEI pattern, ReentrancyGuard, SafeERC20, pull-payment patterns, balance invariants, access control |
+| **Testing** | Unit tests, fuzz tests, cheatcodes, fork testing, `forge coverage`, CI with GitHub Actions (`forge fmt` / `forge test` gates) |
+| **DeFi protocols** | Uniswap V2 (router integration, multi-hop paths, slippage protection, add/remove liquidity) |
 | **Infrastructure** | Anvil (local node simulation), Cast (JSON-RPC), Arbitrum One, Arbiscan, IPFS (Pinata) |
 | **Tools** | Python, Git/GitHub (`gh` CLI), VS Code, Remix IDE, MetaMask |
 
@@ -127,13 +140,13 @@ Unit, access-control, overflow, and fuzz tests. Found and fixed a real bug — d
 
 ## Currently learning
 
-- Uniswap V2 internals (`swapExactTokensForTokens`, router/pair architecture)
-- Mempool-level attack surfaces (sandwich attacks, front-running) and how contract-level parameters defend against them
+- Closing a "ghost listing" edge case in NFT Marketplace: re-validating `ownerOf`/approval at purchase time
+- Progressing through the Blockchain Accelerator's advanced Solidity security modules
 
 ---
 
 ## Let's connect
 
-Open to **Junior Smart Contract Developer** and **Blockchain Security** roles.
+Open to **Smart Contract Developer** and **Blockchain Security** roles.
 
 [LinkedIn](https://www.linkedin.com/in/alexzambrano-web3/) · [alchzamb@gmail.com](mailto:alchzamb@gmail.com)
